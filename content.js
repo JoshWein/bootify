@@ -1,8 +1,24 @@
-function toggleBootstrap() {
-	if(document.getElementById("btspidnm") == null) {
-		addBootstrap();
-	} else {
-		removeBootstrap();
+function toggleBootstrap(arg) {
+	if(arg == 1) {
+		if(document.getElementById("btspidnm") == null) {
+			addBootstrap();
+		} else {
+			removeBootstrap();
+		}
+	} else { // Check if it's in the saved list of sites
+		var url;
+		chrome.runtime.sendMessage({method: "getUrl"}, function(response) {			
+  			url = response;
+		});
+		chrome.storage.sync.get({
+			list: "Enter websites here"
+		}, function(items) {
+			var websites = items.list.split(" ");    
+			for(var i = 0; i < websites.length; i++) {
+				if(websites[i] == url)
+					toggleBootstrap(1);
+			}
+		});
 	}
 }
 
@@ -22,3 +38,5 @@ function removeBootstrap() {
 	link.parentNode.removeChild(link);
 	document.getElementsByTagName('body')[0].classList.remove("container-fluid");
 }
+
+toggleBootstrap(2);

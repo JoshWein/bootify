@@ -1,9 +1,11 @@
 {	
 	"name": "bootify - A Bootstrap Extension",
-	"version": "0.71",
+	"version": "0.75",
 	"permissions": [
     	"activeTab",
-    	"storage"
+    	"storage",
+    	"tabs",
+    	"contextMenus"
   	],
   	"background": {
   		"scripts": ["background.js"],
@@ -13,5 +15,9 @@
 		"default_title": "Add bootstrap to page."
 	},
 	"manifest_version": 2,
-	"options_page": "options.html"
+	"options_page": "options.html",
+	"content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }]
 }
