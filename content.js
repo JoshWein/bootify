@@ -15,7 +15,7 @@ function toggleBootstrap(arg) {
 		}, function(items) {
 			var websites = items.list.split(" ");    
 			for(var i = 0; i < websites.length; i++) {
-				if(websites[i] == url)
+				if(url.substring(0, websites[i].length) == websites[i])
 					toggleBootstrap(1);
 			}
 		});
@@ -28,7 +28,7 @@ function addBootstrap() {
 	link.rel  = 'stylesheet';
 	link.type = 'text/css';
 	link.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css';
-	link.media = 'all';
+	link.media = 'all';	
 	document.getElementsByTagName('head')[0].appendChild(link);
 	document.getElementsByTagName('body')[0].classList.add("container-fluid");
 }
