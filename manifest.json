@@ -1,6 +1,6 @@
 {	
 	"name": "bootify - A Bootstrap Extension",
-	"version": "0.7",
+	"version": "0.71",
 	"permissions": [
     	"activeTab"
   	],
