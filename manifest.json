@@ -1,6 +1,6 @@
 {	
 	"name": "bootify - A Bootstrap Extension",
-	"version": "0.75",
+	"version": "0.8",
 	"permissions": [
     	"activeTab",
     	"storage",
@@ -18,6 +18,6 @@
 	"options_page": "options.html",
 	"content_scripts": [{
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["load.js"]
     }]
 }

@@ -6,13 +6,22 @@
 chrome.browserAction.onClicked.addListener(function(tab) {
   // No tabs or host permissions needed!
   chrome.tabs.executeScript(null, {file: "content.js"}, function() {
-    chrome.tabs.executeScript(null, {code: "toggleBootstrap(1);"});
+    chrome.tabs.executeScript(null, {code: "toggleBootstrap();"});
   });
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.method == "getStatus")
+	console.log(request);
+    if (request.method == "getStatus") {
+    	console.log("statusing");
       sendResponse({status: localStorage['list']});
-    else
+    } else if(request.method == "loadhit") {
+  		chrome.tabs.executeScript(null, {file: "load.js"}, function() {
+		    chrome.tabs.executeScript(null, {code: "addBootstrap();"});
+		  });
+  	} else {
       sendResponse(sender.url); // snub them.
+  	}
 });
+
+

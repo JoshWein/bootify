@@ -16,7 +16,7 @@ function save_options() {
 
 function restore_options() {
   chrome.storage.sync.get({
-    list: "Enter websites here"
+    list: ""
   }, function(items) {
     document.getElementById('websitelist').value = items.list;    
   });
