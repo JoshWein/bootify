@@ -36,7 +36,7 @@ function addToList() {
 			list: "Enter websites here"
 		}, function(items) {
 			if(items.list.indexOf(response) == -1) {
-				items.list += " " + response;   
+				items.list += response + "\n";   
 				chrome.storage.sync.set({
 				    list: items.list    
 				  }, function() {

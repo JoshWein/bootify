@@ -1,6 +1,6 @@
 {	
 	"name": "bootify - A Bootstrap Injector",
-	"version": "0.90",
+	"version": "0.91",
 	"permissions": [
     	"activeTab",
     	"storage",

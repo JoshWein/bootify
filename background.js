@@ -26,10 +26,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   	// console.log(sender.url + " " + request.method);
 });
 
-chrome.contextMenus.create({
-	id: "addToList",
-	title: "Add current site to website list",
-	contexts: ["browser_action", "page"],   // Right click on 
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.contextMenus.create({
+    id: "addToList",
+    title: "Add current site to website list",
+    contexts: ["browser_action", "page"],   // Right click on 
+  });
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {

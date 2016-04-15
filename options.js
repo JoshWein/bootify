@@ -1,6 +1,13 @@
 // Saves options to chrome.storage
 function save_options() {
-  var list = document.getElementById('websitelist').value.replace(/ /g,"\n");  
+  var list = document.getElementById('websitelist').value;
+  var parser = list.split("\n");
+  list = "";
+  for(var i = 0; i < parser.length; i++) {
+    parser[i] = (parser[i].split(" "))[0];
+    if(parser[i].length != 0)
+      list += parser[i] + "\n";
+  }
   chrome.storage.sync.set({
     list: list    
   }, function() {
@@ -18,7 +25,7 @@ function restore_options() {
   chrome.storage.sync.get({
     list: ""
   }, function(items) {
-    document.getElementById('websitelist').value = items.list.replace(/ /g,"\n");    
+    document.getElementById('websitelist').value = items.list;    
   });
 }
 document.addEventListener('DOMContentLoaded', restore_options);
