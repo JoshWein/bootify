@@ -11,9 +11,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	console.log(request);
     if (request.method == "getStatus") {
-    	console.log("statusing");
       sendResponse({status: localStorage['list']});
     } else if(request.method == "loadhit") {
   		chrome.tabs.executeScript(null, {file: "load.js"}, function() {
