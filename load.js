@@ -1,7 +1,7 @@
 var url = -1;
-	chrome.runtime.sendMessage({method: "getUrl"}, function(response) {			
-			url = response;
-	});
+chrome.runtime.sendMessage({method: "getUrl"}, function(response) {			
+		url = response;
+});
 chrome.storage.sync.get({
 	list: "Enter websites here"
 }, function(items) {

@@ -11,15 +11,10 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.method == "getStatus") {
+    if (request.method == "getStatus")
       sendResponse({status: localStorage['list']});
-    } else if(request.method == "loadhit") {
-  		chrome.tabs.executeScript(null, {file: "load.js"}, function() {
-		    chrome.tabs.executeScript(null, {code: "addBootstrap();"});
-		  });
-  	} else {
-      sendResponse(sender.url); // snub them.
-  	}
+    else
+      sendResponse(sender.url);
 });
 
 
