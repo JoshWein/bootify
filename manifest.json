@@ -1,11 +1,12 @@
 {	
 	"name": "bootify - A Bootstrap Injector",
-	"version": "0.82",
+	"version": "0.9",
 	"permissions": [
     	"activeTab",
     	"storage",
     	"tabs",
-    	"contextMenus"
+    	"contextMenus",
+    	"*://*/*"
   	],
   	"background": {
   		"scripts": ["background.js"],
@@ -21,6 +22,6 @@
       "js": ["load.js"]
     }],
     "icons": { "16": "icon16.png",
-           "48": "icon48.png",
+           "48": "icon16dis.png",
           "128": "icon128.png" }
 }

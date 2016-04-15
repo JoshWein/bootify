@@ -18,7 +18,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   	else if(request.method == "disableIcon")  		
 		chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon16dis.png'});
     else if(request.method == "getUrl")
-      sendResponse(sender.url);
+      	sendResponse(sender.url);
+  	else if(request.method == "addBootstrap")
+  		chrome.tabs.executeScript(null, {file: "content.js"}, function() {
+	    	chrome.tabs.executeScript(null, {code: "addBootstrap();"});
+	  	});
+  	// console.log(sender.url + " " + request.method);
 });
 
+chrome.contextMenus.create({
+	id: "addToList",
+	title: "Add current site to website list",
+	contexts: ["browser_action", "page"],   // Right click on 
+});
 
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+  	chrome.tabs.executeScript(null, {file: "content.js"}, function() {
+	    chrome.tabs.executeScript(null, {code: "addToList();"});
+	});
+});

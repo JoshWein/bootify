@@ -7,4 +7,4 @@ Chrome Store: https://chrome.google.com/webstore/detail/bootify/ekbicbimdmfoehan
 *  Go to the options to add a website for the extension to run on automatically or click the extension to add bootstrap to the current page.
 
 ## Planned Features [Feel free to fork and do it yourself]
-*  Ability to save websites through context menu.
+*  Ability to remove websites through context menu.
