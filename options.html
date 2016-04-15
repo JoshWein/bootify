@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+<title>bootify Options</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="form-group">
+		  <label for="comment">Add your websites in a space seperated list</label>
+		  <textarea class="form-control" rows="5" id="websitelist"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div id="status"></div>
+		<button class="btn"id="save">Save</button>
+	</div>
+</div>
+<script type="text/javascript" src="options.js"></script>
+</body>
+</html>

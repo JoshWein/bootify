@@ -9,3 +9,12 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.executeScript(null, {code: "toggleBootstrap();"});
   });
 });
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.method == "getStatus")
+      sendResponse({status: localStorage['list']});
+    else
+      sendResponse(sender.url);
+});
+
+

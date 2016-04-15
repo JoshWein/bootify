@@ -1,10 +1,18 @@
-function toggleBootstrap() {
-	if(document.getElementById("btspidnm") == null) {
-		addBootstrap();
-	} else {
-		removeBootstrap();
+var url = -1;
+chrome.runtime.sendMessage({method: "getUrl"}, function(response) {			
+		url = response;
+});
+chrome.storage.sync.get({
+	list: "Enter websites here"
+}, function(items) {
+	var websites = items.list.split(" ");    
+	for(var i = 0; i < websites.length; i++) {
+		if(url.substring(0, websites[i].length) == websites[i]) {
+			addBootstrap();
+			break;
+		}
 	}
-}
+});
 
 function addBootstrap() {
 	if(document.getElementById("btspidnm") == null) {
@@ -17,10 +25,4 @@ function addBootstrap() {
 		document.getElementsByTagName('head')[0].appendChild(link);
 		document.getElementsByTagName('body')[0].classList.add("container-fluid");
 	}
-}
-
-function removeBootstrap() {
-	var link = document.getElementById("btspidnm");
-	link.parentNode.removeChild(link);
-	document.getElementsByTagName('body')[0].classList.remove("container-fluid");
 }
