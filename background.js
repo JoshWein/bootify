@@ -13,7 +13,11 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.method == "getStatus")
       sendResponse({status: localStorage['list']});
-    else
+  	else if(request.method == "addIcon")
+  		chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon48.png'});
+  	else if(request.method == "disableIcon")  		
+		chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon16dis.png'});
+    else if(request.method == "getUrl")
       sendResponse(sender.url);
 });
 

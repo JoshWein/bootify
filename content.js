@@ -1,8 +1,10 @@
 function toggleBootstrap() {
 	if(document.getElementById("btspidnm") == null) {
 		addBootstrap();
+		chrome.runtime.sendMessage({method: "addIcon"});		
 	} else {
 		removeBootstrap();
+		chrome.runtime.sendMessage({method: "disableIcon"});
 	}
 }
 

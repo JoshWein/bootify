@@ -1,6 +1,6 @@
 {	
-	"name": "bootify - A Bootstrap Extension",
-	"version": "0.8",
+	"name": "bootify - A Bootstrap Injector",
+	"version": "0.82",
 	"permissions": [
     	"activeTab",
     	"storage",
@@ -19,5 +19,8 @@
 	"content_scripts": [{
       "matches": ["<all_urls>"],
       "js": ["load.js"]
-    }]
+    }],
+    "icons": { "16": "icon16.png",
+           "48": "icon48.png",
+          "128": "icon128.png" }
 }
