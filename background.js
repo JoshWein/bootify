@@ -11,19 +11,34 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.method == "getStatus")
-      sendResponse({status: localStorage['list']});
-  	else if(request.method == "addIcon")
-  		chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon48.png'});
-  	else if(request.method == "disableIcon")  		
-		chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon16dis.png'});
-    else if(request.method == "getUrl")
-      	sendResponse(sender.url);
-  	else if(request.method == "addBootstrap")
-  		chrome.tabs.executeScript(null, {file: "content.js"}, function() {
-	    	chrome.tabs.executeScript(null, {code: "addBootstrap();"});
-	  	});
-  	// console.log(sender.url + " " + request.method);
+    if (request.method == "getStatus") {
+        sendResponse({status: localStorage['list']});
+    }	else if(request.method == "addIcon") {
+  		  chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon48.png'});
+    }	else if(request.method == "disableIcon") {
+		    chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon16dis.png'});
+    } else if(request.method == "getUrl") {
+        sendResponse(sender.url);
+    }	else if(request.method == "addBootstrap") {
+  		  chrome.tabs.executeScript(null, {file: "content.js"}, function() {
+	    	  chrome.tabs.executeScript(null, {code: "addBootstrap();"});
+	  	  });
+    } else if(request.method == "siteInList") {
+        chrome.contextMenus.removeAll();
+        chrome.contextMenus.create({
+          id: "removeFromList",
+          title: "Remove current site to website list",
+          contexts: ["browser_action", "page"],   // Right click on 
+        });          
+    } else if(request.method == "siteNotInList") {
+        chrome.contextMenus.removeAll();
+        chrome.contextMenus.create({
+          id: "addToList",
+          title: "Add current site to website list",
+          contexts: ["browser_action", "page"],   // Right click on 
+        });  
+    }
+  	console.log(sender.url + " " + request.method);
 });
 
 chrome.runtime.onInstalled.addListener(function() {
@@ -31,11 +46,21 @@ chrome.runtime.onInstalled.addListener(function() {
     id: "addToList",
     title: "Add current site to website list",
     contexts: ["browser_action", "page"],   // Right click on 
-  });
+  });  
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-  	chrome.tabs.executeScript(null, {file: "content.js"}, function() {
-	    chrome.tabs.executeScript(null, {code: "addToList();"});
-	});
+    console.dir(info.menuItemId);   
+    switch(info.menuItemId) {
+      case "addToList":
+        chrome.tabs.executeScript(null, {file: "content.js"}, function() {
+          chrome.tabs.executeScript(null, {code: "addToList();"});
+        });
+        break;
+      case "removeFromList":
+        chrome.tabs.executeScript(null, {file: "content.js"}, function() {
+          chrome.tabs.executeScript(null, {code: "removeFromList();"});
+        });
+        break;
+    }    
 });

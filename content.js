@@ -43,6 +43,11 @@ function addToList() {
 				  	addBootstrap();
 				  });
 			}
+			chrome.runtime.sendMessage({method: "siteNotInList"});
 		});
 	});	
+}
+
+function removeFromList() {
+
 }
