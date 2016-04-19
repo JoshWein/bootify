@@ -4,24 +4,27 @@
 <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
 <title>bootify Options</title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<style>.btn{width: 40%;}</style>
 </head>
 <body>
 <div class="container-fluid text-center">
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-offset-2 col-md-8">
 			<div class="form-group">
 			  <h2>Add your website on a new line</h2>
 			  <textarea class="form-control" rows="20" id="websitelist"></textarea>
-				<button class="btn"id="save" style="width: 100%">Save</button>
 			</div>
+			<button class="btn"id="save" style="float: left" >Save</button>
+			<button class="btn"id="clear" style="float: right">Clear</button>
 		</div>
 	</div>
 	<div class="row">	
-		<div class="col-md-8">
+		<div class="col-md-offset-2 col-md-8">
 			<div id="status"></div>
 		</div>
 	</div>
 </div>
+<h4 style="float: right; position: absolute; bottom: 0; left: 10px;"> bootify options</h4>
 <script type="text/javascript" src="options.js"></script>
 </body>
 </html>
