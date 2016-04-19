@@ -23,21 +23,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   		  chrome.tabs.executeScript(null, {file: "content.js"}, function() {
 	    	  chrome.tabs.executeScript(null, {code: "addBootstrap();"});
 	  	  });
-    } else if(request.method == "siteInList") {
-        chrome.contextMenus.removeAll();
-        chrome.contextMenus.create({
-          id: "removeFromList",
-          title: "Remove current site to website list",
-          contexts: ["browser_action", "page"],   // Right click on 
-        });          
-    } else if(request.method == "siteNotInList") {
-        chrome.contextMenus.removeAll();
-        chrome.contextMenus.create({
-          id: "addToList",
-          title: "Add current site to website list",
-          contexts: ["browser_action", "page"],   // Right click on 
-        });  
-    }
+    } 
   	console.log(sender.url + " " + request.method);
 });
 
@@ -46,11 +32,15 @@ chrome.runtime.onInstalled.addListener(function() {
     id: "addToList",
     title: "Add current site to website list",
     contexts: ["browser_action", "page"],   // Right click on 
-  });  
+  }); 
+  chrome.contextMenus.create({
+      id: "removeFromList",
+      title: "Remove current site from website list",
+      contexts: ["browser_action", "page"],   // Right click on 
+    });  
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    console.dir(info.menuItemId);   
     switch(info.menuItemId) {
       case "addToList":
         chrome.tabs.executeScript(null, {file: "content.js"}, function() {

@@ -33,7 +33,7 @@ function removeBootstrap() {
 function addToList() {
 	chrome.runtime.sendMessage({method: "getUrl"}, function(response) {	
 		chrome.storage.sync.get({
-			list: "Enter websites here"
+			list: ""
 		}, function(items) {
 			if(items.list.indexOf(response) == -1) {
 				items.list += response + "\n";   
@@ -49,5 +49,21 @@ function addToList() {
 }
 
 function removeFromList() {
-
+	chrome.runtime.sendMessage({method: "getUrl"}, function(response) {	
+		chrome.storage.sync.get({
+			list: ""
+		}, function(items) {
+			var temp = items.list.replace(response+"\n", "");			
+			// if(urlIndex != -1) {
+				// Splice out url from string
+				items.list += response + "\n";   
+				chrome.storage.sync.set({
+				    list: temp
+				  }, function() {
+				  	// addBootstrap();
+				  });
+			// }
+			// chrome.runtime.sendMessage({method: "siteNotInList"});
+		});
+	});	
 }
