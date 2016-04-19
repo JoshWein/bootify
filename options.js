@@ -34,7 +34,7 @@ function clear_options() {
 	chrome.storage.sync.set({
     list: document.getElementById('websitelist').value
   }, function() {
-    // Update status to let user know options were saved.
+    // Update status to let user know options were cleared.
     var status = document.getElementById('status');
     status.innerHTML = '<h3>Options cleared.</h3>';
     setTimeout(function() {

@@ -31,12 +31,12 @@ chrome.runtime.onInstalled.addListener(function() {
   chrome.contextMenus.create({
     id: "addToList",
     title: "Add current site to website list",
-    contexts: ["browser_action", "page"],   // Right click on 
+    contexts: ["browser_action", "page"], 
   }); 
   chrome.contextMenus.create({
       id: "removeFromList",
       title: "Remove current site from website list",
-      contexts: ["browser_action", "page"],   // Right click on 
+      contexts: ["browser_action", "page"],
     });  
 });
 

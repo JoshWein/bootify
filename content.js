@@ -53,17 +53,16 @@ function removeFromList() {
 		chrome.storage.sync.get({
 			list: ""
 		}, function(items) {
-			var temp = items.list.replace(response+"\n", "");			
-			// if(urlIndex != -1) {
-				// Splice out url from string
+			if(items.list.indexOf(response) != -1) {
+				var temp = items.list.replace(response+"\n", "");						
 				items.list += response + "\n";   
 				chrome.storage.sync.set({
 				    list: temp
-				  }, function() {
-				  	// addBootstrap();
-				  });
-			// }
-			// chrome.runtime.sendMessage({method: "siteNotInList"});
+				}, function() {
+					removeBootstrap();
+				});
+				chrome.runtime.sendMessage({method: "siteNotInList"});
+			}
 		});
 	});	
 }
