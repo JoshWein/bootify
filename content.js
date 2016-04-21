@@ -17,6 +17,11 @@ function addBootstrap() {
 		link.media = 'all';	
 		document.getElementsByTagName('head')[0].appendChild(link);
 		document.getElementsByTagName('body')[0].classList.add("container-fluid");
+		if(document.getElementById("btspclid") == null) {
+			var oldBodyHtml = document.getElementsByTagName('body')[0].innerHTML;
+			var newBodyHtml = "<div class='row' id='btspclid'><div class='col-sm-12 col-md-12 col-lg-12'>" + oldBodyHtml + "</div></div>";
+			document.getElementsByTagName('body')[0].innerHTML = newBodyHtml;
+		}
 		var tables = document.getElementsByTagName('table');
 		for(var i = 0; i < tables.length; i++)
 			document.getElementsByTagName('table')[i].classList.add("table");
@@ -28,7 +33,7 @@ function removeBootstrap() {
 	if(document.getElementById("btspidnm") != null) {
 		var link = document.getElementById("btspidnm");
 		link.parentNode.removeChild(link);
-		document.getElementsByTagName('body')[0].classList.remove("container-fluid");	
+		document.getElementsByTagName('body')[0].classList.remove("container-fluid");
 		chrome.runtime.sendMessage({method: "disableIcon"}); // Update icon to "off"
 	}
 }
@@ -57,7 +62,7 @@ function removeFromList() {
 			list: ""
 		}, function(items) {
 			if(items.list.indexOf(response) != -1) {
-				var temp = items.list.replace(response+"\n", "");						
+				var temp = items.list.replace(response+"\n", "");
 				items.list += response + "\n";   
 				chrome.storage.sync.set({
 				    list: temp
