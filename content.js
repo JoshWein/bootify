@@ -17,6 +17,9 @@ function addBootstrap() {
 		link.media = 'all';	
 		document.getElementsByTagName('head')[0].appendChild(link);
 		document.getElementsByTagName('body')[0].classList.add("container-fluid");
+		var tables = document.getElementsByTagName('table');
+		for(var i = 0; i < tables.length; i++)
+			document.getElementsByTagName('table')[i].classList.add("table");
 		chrome.runtime.sendMessage({method: "addIcon"}); // Update icon to "on"
 	}
 }
