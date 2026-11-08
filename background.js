@@ -1,56 +1,51 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-// Called when the user clicks on the browser action.
-chrome.browserAction.onClicked.addListener(function(tab) {
-  // No tabs or host permissions needed!
-  chrome.tabs.executeScript(null, {file: "content.js"}, function() {
-    chrome.tabs.executeScript(null, {code: "toggleBootstrap();"});
+// Runs content.js in the tab, then calls one of its functions there.
+function runInTab(tabId, fnName) {
+  chrome.scripting.executeScript({ target: { tabId: tabId }, files: ["content.js"] }, function () {
+    if (chrome.runtime.lastError) {
+      console.log(chrome.runtime.lastError.message); // e.g. chrome:// pages
+      return;
+    }
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      func: function (name) { window[name](); },
+      args: [fnName]
+    });
   });
+}
+
+// Called when the user clicks on the toolbar icon.
+chrome.action.onClicked.addListener(function (tab) {
+  runInTab(tab.id, "toggleBootstrap");
 });
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.method == "getStatus") {
-        sendResponse({status: localStorage['list']});
-    }	else if(request.method == "addIcon") {
-  		  chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon48.png'});
-    }	else if(request.method == "disableIcon") {
-		    chrome.browserAction.setIcon({tabId: sender.tab.id, path: 'icon16dis.png'});
-    } else if(request.method == "getUrl") {
-        sendResponse(sender.url);
-    }	else if(request.method == "addBootstrap") {
-  		  chrome.tabs.executeScript(null, {file: "content.js"}, function() {
-	    	  chrome.tabs.executeScript(null, {code: "addBootstrap();"});
-	  	  });
-    } 
-  	console.log(sender.url + " " + request.method);
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  var tabId = sender.tab && sender.tab.id;
+  if (request.method == "addIcon") {
+    chrome.action.setIcon({ tabId: tabId, path: "icon48.png" });
+  } else if (request.method == "disableIcon") {
+    chrome.action.setIcon({ tabId: tabId, path: "icon16dis.png" });
+  } else if (request.method == "getUrl") {
+    sendResponse(sender.url);
+  } else if (request.method == "addBootstrap") {
+    runInTab(tabId, "addBootstrap");
+  }
 });
 
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     id: "addToList",
     title: "Add current site to website list",
-    contexts: ["browser_action", "page"], 
-  }); 
+    contexts: ["action", "page"]
+  });
   chrome.contextMenus.create({
-      id: "removeFromList",
-      title: "Remove current site from website list",
-      contexts: ["browser_action", "page"],
-    });  
+    id: "removeFromList",
+    title: "Remove current site from website list",
+    contexts: ["action", "page"]
+  });
 });
 
-chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    switch(info.menuItemId) {
-      case "addToList":
-        chrome.tabs.executeScript(null, {file: "content.js"}, function() {
-          chrome.tabs.executeScript(null, {code: "addToList();"});
-        });
-        break;
-      case "removeFromList":
-        chrome.tabs.executeScript(null, {file: "content.js"}, function() {
-          chrome.tabs.executeScript(null, {code: "removeFromList();"});
-        });
-        break;
-    }    
+chrome.contextMenus.onClicked.addListener(function (info, tab) {
+  if (info.menuItemId == "addToList" || info.menuItemId == "removeFromList") {
+    runInTab(tab.id, info.menuItemId);
+  }
 });

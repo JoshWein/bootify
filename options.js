@@ -13,7 +13,7 @@ function save_options() {
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
-    status.innerHTML = '<h3>Options saved.</h3>';
+    status.textContent = 'Options saved.';
     setTimeout(function() {
       status.textContent = '';
     }, 750);
@@ -36,7 +36,7 @@ function clear_options() {
   }, function() {
     // Update status to let user know options were cleared.
     var status = document.getElementById('status');
-    status.innerHTML = '<h3>Options cleared.</h3>';
+    status.textContent = 'Options cleared.';
     setTimeout(function() {
       status.textContent = '';
     }, 750);

@@ -1,4 +1,4 @@
-function toggleBootstrap() {
+window.toggleBootstrap = function () {
 	if(document.getElementById("btspidnm") == null) {
 		addBootstrap();				
 	} else {
@@ -6,20 +6,20 @@ function toggleBootstrap() {
 	}
 }
 
-function addBootstrap() {
+window.addBootstrap = function () {
 	if(document.getElementById("btspidnm") == null) {
 		var link  = document.createElement('link');
 		// Create an element with an id that should never exist so it doesn't conflict with anything
 		link.id   = "btspidnm";
 		link.rel  = 'stylesheet';
 		link.type = 'text/css';
-		link.href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css';
+		link.href = chrome.runtime.getURL('bootstrap.min.css'); // Bootstrap 5.3.3, bundled
 		link.media = 'all';	
 		document.getElementsByTagName('head')[0].appendChild(link);
 		document.getElementsByTagName('body')[0].classList.add("container-fluid");
 		if(document.getElementById("btspclid") == null) {
 			var oldBodyHtml = document.getElementsByTagName('body')[0].innerHTML;
-			var newBodyHtml = "<div class='row' id='btspclid'><div class='col-sm-12 col-md-12 col-lg-12'>" + oldBodyHtml + "</div></div>";
+			var newBodyHtml = "<div class='row' id='btspclid'><div class='col-12'>" + oldBodyHtml + "</div></div>";
 			document.getElementsByTagName('body')[0].innerHTML = newBodyHtml;
 		}
 		var tables = document.getElementsByTagName('table');
@@ -29,7 +29,7 @@ function addBootstrap() {
 	}
 }
 
-function removeBootstrap() {
+window.removeBootstrap = function () {
 	if(document.getElementById("btspidnm") != null) {
 		var link = document.getElementById("btspidnm");
 		link.parentNode.removeChild(link);
@@ -38,7 +38,7 @@ function removeBootstrap() {
 	}
 }
 
-function addToList() {
+window.addToList = function () {
 	chrome.runtime.sendMessage({method: "getUrl"}, function(response) {	
 		chrome.storage.sync.get({
 			list: ""
@@ -56,7 +56,7 @@ function addToList() {
 	});	
 }
 
-function removeFromList() {
+window.removeFromList = function () {
 	chrome.runtime.sendMessage({method: "getUrl"}, function(response) {	
 		chrome.storage.sync.get({
 			list: ""
